@@ -85,7 +85,7 @@ loco-rs-patched/      Loco 框架补丁 (移除 SQLite 依赖)
 
 ## 开源许可
 
-[Apache License 2.0](LICENSE)
+[MIT License](LICENSE)
 
 ## 贡献
 

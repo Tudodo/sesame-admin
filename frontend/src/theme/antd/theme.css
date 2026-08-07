@@ -1,0 +1,404 @@
+/* Ant Design theme. It reuses the shared themed shell primitives through the
+   tudodo-* aliases below, then adds Ant Design-specific component tokens and
+   refinements at the end of this file. */
+[data-theme="antd"] {
+	--background: 210 29% 97%;
+	--foreground: 220 13% 17%;
+	--card: 0 0% 100%;
+	--card-foreground: 220 13% 17%;
+	--popover: 0 0% 100%;
+	--popover-foreground: 220 13% 17%;
+	--primary: 213 100% 55%;
+	--primary-foreground: 0 0% 100%;
+	--secondary: 211 37% 96%;
+	--secondary-foreground: 220 13% 17%;
+	--muted: 210 25% 96%;
+	--muted-foreground: 220 9% 46%;
+	--accent: 206 100% 95%;
+	--accent-foreground: 222 92% 44%;
+	--destructive: 1 100% 65%;
+	--destructive-foreground: 0 0% 100%;
+	--border: 220 15% 88%;
+	--input: 220 15% 88%;
+	--ring: 213 100% 55%;
+	--radius: 0.375rem;
+	--font-theme-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system,
+		sans-serif;
+	--font-theme-display: "Space Grotesk", var(--font-theme-sans);
+	--app-header-height: 64px;
+	--app-content-vertical-padding: 96px;
+	--sidebar-background: 0 0% 100%;
+	--sidebar-foreground: 220 9% 46%;
+	--sidebar-primary: 213 100% 55%;
+	--sidebar-primary-foreground: 0 0% 100%;
+	--sidebar-accent: 206 100% 95%;
+	--sidebar-accent-foreground: 222 92% 44%;
+	--sidebar-border: 220 15% 88%;
+	--sidebar-ring: 213 100% 55%;
+	--success: 89 71% 44%;
+	--success-foreground: 0 0% 100%;
+	--warning: 43 96% 53%;
+	--warning-foreground: 0 0% 100%;
+	--success-bg: 89 100% 96%;
+	--warning-bg: 47 100% 95%;
+	--info: 213 100% 55%;
+	--viz-1: 213 100% 55%;
+	--viz-2: 43 96% 53%;
+	--viz-3: 268 71% 50%;
+	--viz-4: 180 84% 42%;
+	--tudodo-bg: hsl(var(--background));
+	--tudodo-surface-1: hsl(var(--card));
+	--tudodo-surface-2: hsl(var(--muted));
+	--tudodo-surface-3: hsl(var(--secondary));
+	--tudodo-border: hsl(var(--border));
+	--tudodo-border-strong: hsl(var(--input));
+	--tudodo-text-primary: hsl(var(--foreground));
+	--tudodo-text-secondary: hsl(var(--muted-foreground));
+	--tudodo-text-tertiary: hsl(var(--muted-foreground));
+	--tudodo-accent: hsl(var(--primary));
+	--tudodo-accent-hover: hsl(var(--primary) / 0.88);
+	--tudodo-accent-soft: hsl(var(--accent));
+	--tudodo-on-accent: hsl(var(--primary-foreground));
+	--tudodo-ring: hsl(var(--ring));
+	--tudodo-success: hsl(var(--success));
+	--tudodo-success-bg: hsl(var(--success-bg));
+	--tudodo-warning: hsl(var(--warning));
+	--tudodo-warning-bg: hsl(var(--warning-bg));
+	--tudodo-error: hsl(var(--destructive));
+	--tudodo-error-bg: hsl(var(--destructive) / 0.1);
+	--tudodo-info: hsl(var(--info));
+	--tudodo-shadow-sm: 0 1px 2px rgb(16 24 40 / 0.06), 0 1px 1px
+		rgb(16 24 40 / 0.04);
+	--tudodo-shadow-md: 0 2px 8px -2px rgb(22 119 255 / 0.16), 0 4px 16px -4px
+		rgb(16 24 40 / 0.08);
+	--tudodo-shadow-lg: 0 12px 32px -8px rgb(16 24 40 / 0.16), 0 4px 12px -4px
+		rgb(16 24 40 / 0.08);
+	--antd-bg: hsl(var(--background));
+	--antd-surface-1: hsl(var(--card));
+	--antd-surface-2: hsl(var(--muted));
+	--antd-surface-3: hsl(var(--secondary));
+	--antd-border: hsl(var(--border));
+	--antd-border-strong: hsl(var(--input));
+	--antd-text-primary: hsl(var(--foreground));
+	--antd-text-secondary: hsl(var(--muted-foreground));
+	--antd-accent: hsl(var(--primary));
+	--antd-accent-soft: hsl(var(--accent));
+	--antd-on-accent: hsl(var(--primary-foreground));
+	--antd-control-height: 36px;
+	--antd-radius-sm: 6px;
+	--antd-radius-md: 8px;
+	--antd-radius-lg: 12px;
+	--antd-shadow-sm: 0 1px 2px rgb(16 24 40 / 0.06), 0 1px 1px
+		rgb(16 24 40 / 0.04);
+	--antd-shadow-md: 0 4px 14px -4px rgb(16 24 40 / 0.12), 0 2px 6px -2px
+		rgb(16 24 40 / 0.08);
+}
+
+[data-theme="antd"].dark {
+	--background: 210 20% 8%;
+	--foreground: 215 28% 93%;
+	--card: 215 18% 12%;
+	--card-foreground: 215 28% 93%;
+	--popover: 215 18% 12%;
+	--popover-foreground: 215 28% 93%;
+	--primary: 212 100% 63%;
+	--primary-foreground: 210 20% 8%;
+	--secondary: 214 18% 17%;
+	--secondary-foreground: 215 28% 93%;
+	--muted: 214 16% 15%;
+	--muted-foreground: 215 12% 64%;
+	--accent: 215 63% 18%;
+	--accent-foreground: 207 100% 78%;
+	--destructive: 0 100% 73%;
+	--destructive-foreground: 0 0% 100%;
+	--border: 214 15% 21%;
+	--input: 214 15% 21%;
+	--ring: 212 100% 63%;
+	--sidebar-background: 215 18% 12%;
+	--sidebar-foreground: 215 12% 64%;
+	--sidebar-primary: 212 100% 63%;
+	--sidebar-primary-foreground: 210 20% 8%;
+	--sidebar-accent: 215 63% 18%;
+	--sidebar-accent-foreground: 207 100% 78%;
+	--sidebar-border: 214 15% 21%;
+	--sidebar-ring: 212 100% 63%;
+	--success: 89 60% 63%;
+	--success-foreground: 210 20% 8%;
+	--warning: 43 100% 62%;
+	--warning-foreground: 210 20% 8%;
+	--success-bg: 89 45% 12%;
+	--warning-bg: 43 48% 13%;
+	--info: 212 100% 63%;
+	--viz-1: 212 100% 63%;
+	--viz-2: 43 100% 62%;
+	--viz-3: 263 72% 74%;
+	--viz-4: 181 66% 62%;
+	--tudodo-bg: hsl(var(--background));
+	--tudodo-surface-1: hsl(var(--card));
+	--tudodo-surface-2: hsl(var(--muted));
+	--tudodo-surface-3: hsl(var(--secondary));
+	--tudodo-border: hsl(var(--border));
+	--tudodo-border-strong: hsl(var(--input));
+	--tudodo-text-primary: hsl(var(--foreground));
+	--tudodo-text-secondary: hsl(var(--muted-foreground));
+	--tudodo-text-tertiary: hsl(var(--muted-foreground));
+	--tudodo-accent: hsl(var(--primary));
+	--tudodo-accent-hover: hsl(var(--primary) / 0.86);
+	--tudodo-accent-soft: hsl(var(--accent));
+	--tudodo-on-accent: hsl(var(--primary-foreground));
+	--tudodo-ring: hsl(var(--ring));
+	--tudodo-success: hsl(var(--success));
+	--tudodo-success-bg: hsl(var(--success-bg));
+	--tudodo-warning: hsl(var(--warning));
+	--tudodo-warning-bg: hsl(var(--warning-bg));
+	--tudodo-error: hsl(var(--destructive));
+	--tudodo-error-bg: hsl(var(--destructive) / 0.12);
+	--tudodo-info: hsl(var(--info));
+	--tudodo-shadow-sm: 0 1px 2px rgb(10 15 25 / 0.28), 0 1px 1px
+		rgb(10 15 25 / 0.2);
+	--tudodo-shadow-md: 0 2px 8px -2px rgb(0 0 0 / 0.28), 0 4px 16px -4px
+		rgb(0 0 0 / 0.2);
+	--tudodo-shadow-lg: 0 12px 32px -8px rgb(0 0 0 / 0.32), 0 4px 12px -4px
+		rgb(0 0 0 / 0.2);
+	--antd-bg: hsl(var(--background));
+	--antd-surface-1: hsl(var(--card));
+	--antd-surface-2: hsl(var(--muted));
+	--antd-surface-3: hsl(var(--secondary));
+	--antd-border: hsl(var(--border));
+	--antd-border-strong: hsl(var(--input));
+	--antd-text-primary: hsl(var(--foreground));
+	--antd-text-secondary: hsl(var(--muted-foreground));
+	--antd-accent: hsl(var(--primary));
+	--antd-accent-soft: hsl(var(--accent));
+	--antd-on-accent: hsl(var(--primary-foreground));
+	--antd-control-height: 36px;
+	--antd-radius-sm: 6px;
+	--antd-radius-md: 8px;
+	--antd-radius-lg: 12px;
+	--antd-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.22), 0 1px 1px rgb(0 0 0 / 0.16);
+	--antd-shadow-md: 0 4px 14px -4px rgb(0 0 0 / 0.3), 0 2px 6px -2px
+		rgb(0 0 0 / 0.2);
+}
+/* Ant Design theme refinements. The shared themed shell keeps the dashboard
+   and layout consistent, while these overrides give Ant Design components their
+   own compact, enterprise-oriented visual language. */
+[data-theme="antd"] .tudodo-shell {
+	background: var(--antd-bg);
+}
+
+[data-theme="antd"] .tudodo-sidebar {
+	width: 240px !important;
+	flex-basis: 240px;
+	background: var(--antd-surface-1);
+	border-right: 1px solid var(--antd-border);
+	padding: 12px 10px;
+}
+
+[data-theme="antd"] .tudodo-sidebar.is-collapsed {
+	width: 68px !important;
+	flex-basis: 68px;
+}
+
+[data-theme="antd"] .tudodo-brand {
+	height: 64px;
+	padding: 0 14px;
+	border-bottom: 1px solid var(--antd-border);
+}
+
+[data-theme="antd"] .tudodo-brand-mark {
+	width: 32px;
+	height: 32px;
+	border-radius: var(--antd-radius-md);
+	background: var(--antd-accent);
+	color: var(--antd-on-accent);
+	box-shadow: var(--antd-shadow-sm);
+}
+
+[data-theme="antd"] .tudodo-nav-item {
+	gap: 10px;
+	padding: 8px 12px;
+	border-radius: var(--antd-radius-md);
+	font-weight: 500;
+}
+
+[data-theme="antd"] .tudodo-nav-item[data-active="true"] {
+	background: var(--antd-accent-soft);
+	color: var(--antd-accent);
+}
+
+[data-theme="antd"] .tudodo-topbar {
+	background: color-mix(in srgb, var(--antd-surface-1) 88%, transparent);
+	border-bottom: 1px solid var(--antd-border);
+	backdrop-filter: saturate(160%) blur(10px);
+}
+
+[data-theme="antd"] .tudodo-search {
+	border-color: var(--antd-border);
+	background: var(--antd-surface-2);
+	border-radius: var(--antd-radius-md);
+}
+
+[data-theme="antd"] .tudodo-content {
+	width: 100%;
+	max-width: none;
+	margin: 0;
+	padding: 32px 32px 64px;
+}
+
+[data-theme="antd"] .tudodo-card {
+	border-radius: var(--antd-radius-lg);
+	border: 1px solid var(--antd-border);
+	background: var(--antd-surface-1);
+	box-shadow: var(--antd-shadow-sm);
+}
+
+[data-theme="antd"] .tudodo-card-head,
+[data-theme="antd"] .tudodo-card-header {
+	padding: 16px 20px;
+	border-bottom: 1px solid var(--antd-border);
+}
+
+[data-theme="antd"] .tudodo-btn {
+	border-radius: var(--antd-radius-sm);
+	font-weight: 500;
+}
+
+[data-theme="antd"] .tudodo-btn[data-variant="default"] {
+	box-shadow: var(--antd-shadow-sm);
+}
+
+[data-theme="antd"] .tudodo-btn[data-size="default"],
+[data-theme="antd"] .tudodo-btn[data-size="lg"] {
+	min-height: 36px;
+}
+
+[data-theme="antd"] .tudodo-badge {
+	border-radius: var(--antd-radius-sm);
+	font-weight: 500;
+}
+
+[data-theme="antd"] .tudodo-page-title {
+	font-size: 32px;
+	line-height: 1.2;
+}
+
+[data-theme="antd"] .tudodo-data-table th {
+	background: var(--antd-surface-2);
+	color: var(--antd-text-secondary);
+	font-size: 12px;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+[data-theme="antd"] .ant-btn {
+	border-radius: var(--antd-radius-sm);
+	font-weight: 500;
+}
+
+[data-theme="antd"] .ant-btn-primary {
+	box-shadow: 0 2px 6px -2px rgb(22 119 255 / 0.32);
+}
+
+[data-theme="antd"] .ant-input,
+[data-theme="antd"] .ant-input-affix-wrapper,
+[data-theme="antd"] .ant-input-number,
+[data-theme="antd"] .ant-picker {
+	background: var(--antd-surface-1);
+	border-color: var(--antd-border);
+	border-radius: var(--antd-radius-sm);
+}
+
+[data-theme="antd"] .ant-input:focus,
+[data-theme="antd"] .ant-input-affix-wrapper-focused,
+[data-theme="antd"] .ant-input-number-focused,
+[data-theme="antd"] .ant-picker-focused {
+	border-color: var(--antd-accent);
+	box-shadow: 0 0 0 3px rgb(22 119 255 / 0.1);
+}
+
+[data-theme="antd"] .ant-select-selector {
+	background: var(--antd-surface-1) !important;
+	border-color: var(--antd-border) !important;
+	border-radius: var(--antd-radius-sm) !important;
+}
+
+[data-theme="antd"] .ant-select-dropdown,
+[data-theme="antd"] .ant-dropdown-menu,
+[data-theme="antd"] .ant-picker-dropdown {
+	background: var(--antd-surface-1);
+	border: 1px solid var(--antd-border);
+	border-radius: var(--antd-radius-md);
+	box-shadow: var(--antd-shadow-md);
+}
+
+[data-theme="antd"] .ant-table-wrapper .ant-table {
+	background: transparent;
+	border-radius: var(--antd-radius-lg);
+}
+
+[data-theme="antd"] .ant-table-thead > tr > th {
+	background: var(--antd-surface-2);
+	color: var(--antd-text-secondary);
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+[data-theme="antd"] .ant-table-tbody > tr > td {
+	border-bottom-color: var(--antd-border);
+	color: var(--antd-text-primary);
+	font-size: 13px;
+}
+
+[data-theme="antd"] .ant-table-tbody > tr:hover > td {
+	background: var(--antd-accent-soft);
+}
+
+[data-theme="antd"] .ant-modal-content {
+	background: var(--antd-surface-1);
+	border: 1px solid var(--antd-border);
+	border-radius: var(--antd-radius-lg);
+	box-shadow: var(--antd-shadow-md);
+}
+
+[data-theme="antd"] .ant-modal-header,
+[data-theme="antd"] .ant-modal-footer {
+	background: var(--antd-surface-1);
+}
+
+[data-theme="antd"] .ant-form-item-label > label {
+	color: var(--antd-text-secondary);
+	font-size: 13px;
+}
+
+[data-theme="antd"] .ant-tabs-tab-active .ant-tabs-tab-btn {
+	color: var(--antd-accent);
+	font-weight: 600;
+}
+
+[data-theme="antd"] .ant-card {
+	background: var(--antd-surface-1);
+	border: 1px solid var(--antd-border);
+	border-radius: var(--antd-radius-lg);
+	box-shadow: var(--antd-shadow-sm);
+}
+
+[data-theme="antd"] ::selection {
+	background: hsl(var(--primary) / 0.18);
+}
+
+@media (max-width: 768px) {
+	[data-theme="antd"] {
+		--app-content-vertical-padding: 72px;
+	}
+	[data-theme="antd"] .tudodo-content {
+		padding: 24px 16px 48px;
+	}
+	[data-theme="antd"] .tudodo-topbar {
+		padding: 0 16px;
+	}
+	[data-theme="antd"] .tudodo-search {
+		min-width: 0;
+	}
+}

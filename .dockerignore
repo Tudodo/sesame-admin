@@ -1,0 +1,7 @@
+target/
+frontend/dist/
+frontend/node_modules/
+.git/
+uploads/
+*.md
+.env

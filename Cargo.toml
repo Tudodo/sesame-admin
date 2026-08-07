@@ -1,0 +1,69 @@
+[workspace]
+members = ["migration"]
+
+[package]
+name = "loco"
+version = "0.1.0"
+edition = "2021"
+publish = false
+default-run = "loco-cli"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[workspace.dependencies]
+loco-rs = { version = "0.16", default-features = false, features = ["auth_jwt", "cli", "with-db", "cache_inmem", "cache_redis", "bg_redis", "bg_pg", "storage_aws_s3"] }
+
+[dependencies]
+aes-gcm = "0.10"
+dotenvy = "0.15"
+bytes = "1"
+mime_guess = "2"
+loco-rs = { workspace = true }
+opendal = { version = "0.54", default-features = false, features = ["services-s3", "services-fs"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1" }
+tokio = { version = "1.45", default-features = false, features = [
+  "rt-multi-thread",
+] }
+async-trait = { version = "0.1" }
+axum = { version = "0.8" }
+tracing = { version = "0.1" }
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+regex = { version = "1.11" }
+redis = { version = "0.31", features = ["tokio-comp", "connection-manager"] }
+migration = { path = "migration" }
+sea-orm = { version = "1.1", default-features = false, features = [
+  "with-json",
+  "with-chrono",
+  "with-uuid",
+  "sqlx-postgres",
+  "runtime-tokio-rustls",
+  "macros",
+] }
+chrono = { version = "0.4" }
+validator = { version = "0.20" }
+rand = { version = "0.8" }
+uuid = { version = "1.6", features = ["v4"] }
+sha2 = "0.10"
+include_dir = { version = "0.7" }
+axum-extra = { version = "0.10", features = ["form"] }
+tower-http = { version = "0.6", features = ["cors"] }
+jsonwebtoken = "9.3"
+url = "2"
+
+[[bin]]
+name = "loco-cli"
+path = "src/bin/main.rs"
+required-features = []
+
+[dev-dependencies]
+loco-rs = { workspace = true, features = ["testing"] }
+serial_test = { version = "3.1.1" }
+rstest = { version = "0.25" }
+insta = { version = "1.34", features = ["redactions", "yaml", "filters"] }
+
+# Patch loco-rs to remove hardcoded SQLite features — this project only uses PostgreSQL.
+# Upstream loco-rs 0.16.4 hardcodes `sqlite`/`sqlx-sqlite` in its dependency
+# declarations, which pulls in libsqlite3-sys via Cargo feature unification.
+[patch.crates-io]
+loco-rs = { path = "loco-rs-patched" }

@@ -1,0 +1,5 @@
+---
+source: tests/requests/auth.rs
+expression: magic_link_response.text()
+---
+"{\"token\":\"TOKEN\",\"pid\":\"PID\",\"name\":\"user1\",\"email\":\"user1@example.com\",\"roles\":[],\"permissions\":[],\"menus\":[],\"is_verified\":false}"

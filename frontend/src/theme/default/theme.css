@@ -1,0 +1,478 @@
+:root {
+	--background: 0 0% 100%;
+	--foreground: 240 10% 3.9%;
+	--card: 0 0% 100%;
+	--card-foreground: 240 10% 3.9%;
+	--popover: 0 0% 100%;
+	--popover-foreground: 240 10% 3.9%;
+	--primary: 240 5.9% 10%;
+	--primary-foreground: 0 0% 98%;
+	--secondary: 240 4.8% 95.9%;
+	--secondary-foreground: 240 5.9% 10%;
+	--muted: 240 4.8% 95.9%;
+	--muted-foreground: 240 3.8% 46.1%;
+	--accent: 240 4.8% 95.9%;
+	--accent-foreground: 240 5.9% 10%;
+	--destructive: 0 84.2% 60.2%;
+	--destructive-foreground: 0 0% 98%;
+	--border: 240 5.9% 90%;
+	--input: 240 5.9% 90%;
+	--ring: 240 5.9% 10%;
+	--radius: 0.5rem;
+	--font-theme-sans: ui-sans-serif, system-ui, -apple-system, sans-serif;
+	--font-theme-display: var(--font-theme-sans);
+	--app-header-height: 56px;
+	--app-content-vertical-padding: 32px;
+	--sidebar-background: 0 0% 98%;
+	--sidebar-foreground: 240 5.3% 26.1%;
+	--sidebar-primary: 240 5.9% 10%;
+	--sidebar-primary-foreground: 0 0% 98%;
+	--sidebar-accent: 240 4.8% 95.9%;
+	--sidebar-accent-foreground: 240 5.9% 10%;
+	--sidebar-border: 220 13% 91%;
+	--sidebar-ring: 217.2 91.2% 59.8%;
+	--success: 142 71% 45%;
+	--success-foreground: 0 0% 98%;
+	--warning: 38 92% 50%;
+	--warning-foreground: 0 0% 98%;
+	--success-bg: 142 69% 94%;
+	--warning-bg: 38 92% 94%;
+	--info: 240 5.9% 10%;
+	--viz-1: 240 5.9% 10%;
+	--viz-2: 142 71% 45%;
+	--viz-3: 38 92% 50%;
+	--viz-4: 217.2 91.2% 59.8%;
+}
+
+.dark {
+	--background: 240 10% 3.9%;
+	--foreground: 0 0% 98%;
+	--card: 240 10% 3.9%;
+	--card-foreground: 0 0% 98%;
+	--popover: 240 10% 3.9%;
+	--popover-foreground: 0 0% 98%;
+	--primary: 0 0% 98%;
+	--primary-foreground: 240 5.9% 10%;
+	--secondary: 240 3.7% 15.9%;
+	--secondary-foreground: 0 0% 98%;
+	--muted: 240 3.7% 15.9%;
+	--muted-foreground: 240 5% 64.9%;
+	--accent: 240 3.7% 15.9%;
+	--accent-foreground: 0 0% 98%;
+	--destructive: 0 62.8% 30.6%;
+	--destructive-foreground: 0 0% 98%;
+	--border: 240 3.7% 15.9%;
+	--input: 240 3.7% 15.9%;
+	--ring: 240 4.9% 83.9%;
+	--sidebar-background: 240 10% 3.9%;
+	--sidebar-foreground: 240 5% 64.9%;
+	--sidebar-primary: 224.3 76.3% 48%;
+	--sidebar-primary-foreground: 0 0% 100%;
+	--sidebar-accent: 240 3.7% 15.9%;
+	--sidebar-accent-foreground: 240 5% 98%;
+	--sidebar-border: 240 3.7% 15.9%;
+	--sidebar-ring: 217.2 91.2% 59.8%;
+	--success: 142 71% 45%;
+	--success-foreground: 0 0% 98%;
+	--warning: 38 92% 50%;
+	--warning-foreground: 0 0% 98%;
+	--success-bg: 142 60% 20%;
+	--warning-bg: 38 60% 20%;
+	--info: 240 5% 64.9%;
+	--viz-1: 224.3 76.3% 48%;
+	--viz-2: 142 71% 45%;
+	--viz-3: 38 92% 50%;
+	--viz-4: 217.2 91.2% 59.8%;
+}
+
+/* Default dashboard styling. It intentionally differs from Tudodo and uses
+   the default theme's existing shadcn tokens, so no second data integration
+   is required. */
+[data-theme="default"] .tudodo-dashboard {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	width: 100%;
+}
+
+[data-theme="default"] .tudodo-page-head {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 16px;
+	flex-wrap: wrap;
+	padding-bottom: 16px;
+	border-bottom: 1px solid hsl(var(--border));
+}
+
+[data-theme="default"] .tudodo-page-title {
+	font-family: var(--font-theme-sans);
+	font-size: 24px;
+	font-weight: 650;
+	line-height: 1.25;
+	letter-spacing: 0;
+}
+
+[data-theme="default"] .tudodo-page-subtitle {
+	margin-top: 4px;
+	color: hsl(var(--muted-foreground));
+	font-size: 13px;
+}
+
+[data-theme="default"] .tudodo-grid-stats {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 14px;
+}
+
+[data-theme="default"] .tudodo-card {
+	border: 1px solid hsl(var(--border));
+	border-radius: 8px;
+	background: hsl(var(--card));
+	color: hsl(var(--card-foreground));
+	box-shadow: 0 1px 2px hsl(0 0% 0% / 0.04);
+}
+
+[data-theme="default"] .tudodo-stat {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	padding: 18px 20px;
+	overflow: hidden;
+}
+
+[data-theme="default"] .tudodo-stat::after {
+	content: "";
+	position: absolute;
+	inset: auto 0 0;
+	height: 3px;
+	background: linear-gradient(90deg, hsl(var(--viz-1)), hsl(var(--viz-2)));
+	opacity: 0.32;
+	pointer-events: none;
+}
+
+[data-theme="default"] .tudodo-stat-label {
+	color: hsl(var(--muted-foreground));
+	font-size: 12px;
+	font-weight: 500;
+}
+
+[data-theme="default"] .tudodo-stat-value {
+	font-family: var(--font-theme-sans);
+	font-size: 28px;
+	font-weight: 650;
+	line-height: 1.15;
+	letter-spacing: 0;
+	font-variant-numeric: tabular-nums;
+}
+
+[data-theme="default"] .tudodo-stat-trend {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	align-self: flex-start;
+	padding: 3px 8px;
+	border-radius: 999px;
+	background: hsl(var(--muted));
+	color: hsl(var(--muted-foreground));
+	font-size: 12px;
+	font-weight: 500;
+}
+
+[data-theme="default"] .tudodo-stat-trend.up {
+	background: hsl(var(--success-bg));
+	color: hsl(var(--success));
+}
+
+[data-theme="default"] .tudodo-stat-trend.down {
+	background: hsl(var(--warning-bg));
+	color: hsl(var(--warning));
+}
+
+[data-theme="default"] .tudodo-spark {
+	display: block;
+	width: 100%;
+	height: 32px;
+	margin-top: 8px;
+}
+
+[data-theme="default"] .tudodo-section-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1.7fr) minmax(280px, 0.8fr);
+	gap: 14px;
+	align-items: stretch;
+}
+
+[data-theme="default"] .tudodo-card-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 14px 18px;
+	border-bottom: 1px solid hsl(var(--border));
+}
+
+[data-theme="default"] .tudodo-card-title {
+	font-family: var(--font-theme-sans);
+	font-size: 15px;
+	font-weight: 650;
+	letter-spacing: 0;
+}
+
+[data-theme="default"] .tudodo-card-body {
+	padding: 18px;
+}
+
+[data-theme="default"] .tudodo-legend {
+	display: flex;
+	gap: 14px;
+	color: hsl(var(--muted-foreground));
+	font-size: 12px;
+}
+
+[data-theme="default"] .tudodo-legend span {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+}
+
+[data-theme="default"] .tudodo-legend i {
+	display: inline-block;
+	width: 14px;
+	height: 3px;
+	border-radius: 2px;
+}
+
+[data-theme="default"] .tudodo-chart {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+[data-theme="default"] .tudodo-chart .tudodo-grid-line {
+	stroke: hsl(var(--border));
+	stroke-width: 1;
+	stroke-dasharray: 4 6;
+}
+
+[data-theme="default"] .tudodo-chart .tudodo-axis-label {
+	fill: hsl(var(--muted-foreground));
+	font-family: var(--font-theme-sans);
+	font-size: 11px;
+}
+
+[data-theme="default"] .tudodo-chart .tudodo-line-main {
+	fill: none;
+	stroke: hsl(var(--viz-1));
+	stroke-width: 2.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+[data-theme="default"] .tudodo-chart .tudodo-line-prev {
+	fill: none;
+	stroke: hsl(var(--viz-2));
+	stroke-width: 2;
+	stroke-dasharray: 5 5;
+	opacity: 0.7;
+}
+
+[data-theme="default"] .tudodo-chart .tudodo-dot {
+	fill: hsl(var(--card));
+	stroke: hsl(var(--viz-1));
+	stroke-width: 2.5;
+}
+
+[data-theme="default"] .tudodo-kpi-foot {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-top: 12px;
+	color: hsl(var(--muted-foreground));
+	font-size: 12px;
+}
+
+[data-theme="default"] .tudodo-stack {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+[data-theme="default"] .tudodo-row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+[data-theme="default"] .tudodo-progress {
+	height: 6px;
+	margin-top: 8px;
+	overflow: hidden;
+	border-radius: 999px;
+	background: hsl(var(--muted));
+}
+
+[data-theme="default"] .tudodo-progress > span {
+	display: block;
+	height: 100%;
+	border-radius: 999px;
+	transition: width 220ms ease;
+}
+
+[data-theme="default"] .tudodo-table-wrap {
+	width: 100%;
+	overflow-x: auto;
+}
+
+[data-theme="default"] .tudodo-data-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 13px;
+}
+
+[data-theme="default"] .tudodo-data-table th {
+	padding: 10px 16px;
+	border-bottom: 1px solid hsl(var(--border));
+	color: hsl(var(--muted-foreground));
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0;
+	text-align: left;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+[data-theme="default"] .tudodo-data-table td {
+	padding: 10px 16px;
+	border-bottom: 1px solid hsl(var(--border));
+	color: hsl(var(--foreground));
+	vertical-align: middle;
+}
+
+[data-theme="default"] .tudodo-data-table tbody tr {
+	transition: background 120ms ease;
+}
+
+[data-theme="default"] .tudodo-data-table tbody tr:hover {
+	background: hsl(var(--muted) / 0.35);
+}
+
+[data-theme="default"] .tudodo-data-table tbody tr:last-child td {
+	border-bottom: 0;
+}
+
+[data-theme="default"] .tudodo-cell-strong {
+	font-weight: 600;
+}
+
+[data-theme="default"] .tudodo-cell-muted {
+	color: hsl(var(--muted-foreground));
+}
+
+[data-theme="default"] .tudodo-feed {
+	display: flex;
+	flex-direction: column;
+}
+
+[data-theme="default"] .tudodo-feed-item {
+	display: flex;
+	gap: 12px;
+	padding: 10px 0;
+	border-bottom: 1px solid hsl(var(--border));
+}
+
+[data-theme="default"] .tudodo-feed-item:last-child {
+	border-bottom: 0;
+}
+
+[data-theme="default"] .tudodo-feed-icon {
+	display: grid;
+	width: 30px;
+	height: 30px;
+	flex: none;
+	place-items: center;
+	border: 1px solid hsl(var(--border));
+	border-radius: 6px;
+	background: hsl(var(--muted) / 0.6);
+	color: hsl(var(--muted-foreground));
+}
+
+[data-theme="default"] .tudodo-feed-icon svg {
+	width: 15px;
+	height: 15px;
+}
+
+[data-theme="default"] .tudodo-feed-body {
+	min-width: 0;
+}
+
+[data-theme="default"] .tudodo-feed-title {
+	font-size: 13px;
+	font-weight: 600;
+}
+
+[data-theme="default"] .tudodo-feed-meta {
+	margin-top: 2px;
+	color: hsl(var(--muted-foreground));
+	font-size: 12px;
+}
+
+[data-theme="default"] .tudodo-empty {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	min-height: 210px;
+	padding: 32px;
+	text-align: center;
+	color: hsl(var(--muted-foreground));
+}
+
+[data-theme="default"] .tudodo-empty-art {
+	display: grid;
+	width: 56px;
+	height: 56px;
+	place-items: center;
+	border: 1px dashed hsl(var(--border));
+	border-radius: 8px;
+	background: hsl(var(--muted) / 0.45);
+	color: hsl(var(--muted-foreground));
+}
+
+[data-theme="default"] .tudodo-empty h3 {
+	margin: 0;
+	color: hsl(var(--foreground));
+	font-size: 16px;
+	font-weight: 650;
+}
+
+[data-theme="default"] .tudodo-empty p {
+	margin: 0;
+	max-width: 36ch;
+	font-size: 13px;
+}
+
+@media (max-width: 1024px) {
+	[data-theme="default"] .tudodo-section-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 768px) {
+	[data-theme="default"] .tudodo-grid-stats {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+	[data-theme="default"] .tudodo-page-head {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+}
+
+@media (max-width: 520px) {
+	[data-theme="default"] .tudodo-grid-stats {
+		grid-template-columns: 1fr;
+	}
+}

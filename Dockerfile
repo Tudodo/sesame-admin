@@ -5,8 +5,6 @@ WORKDIR /app
 COPY Cargo.toml Cargo.lock ./
 COPY src/ src/
 COPY migration/ migration/
-COPY flowable-engine/ flowable-engine/
-COPY flowable-model/ flowable-model/
 RUN cargo build --release -p loco && \
     cp target/release/loco-cli /usr/local/bin/loco-cli
 

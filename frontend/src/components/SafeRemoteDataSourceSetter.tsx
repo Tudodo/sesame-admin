@@ -16,9 +16,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+import { TextareaWithCounter } from "@/components/ui/textarea-counter";
 import { Settings2 } from "lucide-react";
 import { useEffect, useState } from "react";
+
+import { isSafeApiPath } from "@/services/api";
 
 export interface SafeRemoteDataSource {
   url?: string;
@@ -86,6 +88,10 @@ export const SafeRemoteDataSourceSetter: React.FC<
       setError("请填写请求地址");
       return;
     }
+    if (!isSafeApiPath(trimmedUrl)) {
+      setError("仅允许同源 API 请求，请填写以 / 开头的相对路径");
+      return;
+    }
     const params = parseParams(paramsText);
     if (!params) {
       setError("请求参数必须是 JSON 对象");
@@ -115,71 +121,106 @@ export const SafeRemoteDataSourceSetter: React.FC<
       </Button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle>配置远程数据源</DialogTitle>
-            <DialogDescription>
-              仅使用字段映射读取接口返回值，不再执行 JavaScript 代码。
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div className="space-y-1">
-              <Label>请求地址</Label>
-              <Input
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                placeholder="/dictionary-entries?dict_type=gender&_start=0&_end=999"
-              />
-            </div>
-            <div className="grid grid-cols-3 gap-3">
-              <div className="col-span-1 space-y-1">
-                <Label>请求方式</Label>
-                <Select value={method} onValueChange={setMethod}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {METHOD_OPTIONS.map((item) => (
-                      <SelectItem key={item} value={item}>
-                        {item}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="col-span-1 space-y-1">
-                <Label>标签字段</Label>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSave();
+            }}
+          >
+            <DialogHeader>
+              <DialogTitle>配置远程数据源</DialogTitle>
+              <DialogDescription>
+                仅使用字段映射读取接口返回值，不再执行 JavaScript 代码。
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="space-y-1">
+                <Label htmlFor="remote-ds-url">请求地址</Label>
                 <Input
-                  value={labelField}
-                  onChange={(e) => setLabelField(e.target.value)}
+                  id="remote-ds-url"
+                  value={url}
+                  onChange={(e) => {
+                    setUrl(e.target.value);
+                    setError("");
+                  }}
+                  placeholder="/dictionary-entries/options/leave_type"
                 />
               </div>
-              <div className="col-span-1 space-y-1">
-                <Label>值字段</Label>
-                <Input
-                  value={valueField}
-                  onChange={(e) => setValueField(e.target.value)}
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                <div className="col-span-1 space-y-1">
+                  <Label htmlFor="remote-ds-method">请求方式</Label>
+                  <Select
+                    value={method}
+                    onValueChange={(v) => {
+                      setMethod(v);
+                      setError("");
+                    }}
+                  >
+                    <SelectTrigger id="remote-ds-method">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {METHOD_OPTIONS.map((item) => (
+                        <SelectItem key={item} value={item}>
+                          {item}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="col-span-1 space-y-1">
+                  <Label htmlFor="remote-ds-label-field">标签字段</Label>
+                  <Input
+                    id="remote-ds-label-field"
+                    value={labelField}
+                    onChange={(e) => {
+                      setLabelField(e.target.value);
+                      setError("");
+                    }}
+                  />
+                </div>
+                <div className="col-span-1 space-y-1">
+                  <Label htmlFor="remote-ds-value-field">值字段</Label>
+                  <Input
+                    id="remote-ds-value-field"
+                    value={valueField}
+                    onChange={(e) => {
+                      setValueField(e.target.value);
+                      setError("");
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="remote-ds-params">请求参数（JSON 对象）</Label>
+                <TextareaWithCounter
+                  id="remote-ds-params"
+                  value={paramsText}
+                  onChange={(e) => {
+                    setParamsText(e.target.value);
+                    setError("");
+                  }}
+                  maxLength={4000}
+                  rows={4}
                 />
               </div>
+              {error && (
+                <p role="alert" className="text-sm text-destructive">
+                  {error}
+                </p>
+              )}
             </div>
-            <div className="space-y-1">
-              <Label>请求参数（JSON 对象）</Label>
-              <Textarea
-                value={paramsText}
-                onChange={(e) => {
-                  setParamsText(e.target.value);
-                  setError("");
-                }}
-                rows={4}
-              />
-            </div>
-            {error && <p className="text-sm text-destructive">{error}</p>}
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setOpen(false)}>
-              取消
-            </Button>
-            <Button onClick={handleSave}>保存</Button>
-          </DialogFooter>
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setOpen(false)}
+              >
+                取消
+              </Button>
+              <Button type="submit">保存</Button>
+            </DialogFooter>
+          </form>
         </DialogContent>
       </Dialog>
     </>

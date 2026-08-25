@@ -73,10 +73,16 @@ function ConfirmDialog({
   onCancel: () => void;
 }) {
   const [open, setOpen] = React.useState(true);
+  const resolvedRef = React.useRef(false);
 
   const handleClose = (result: boolean) => {
+    if (resolvedRef.current) return;
+    resolvedRef.current = true;
     setOpen(false);
-    setTimeout(() => (result ? onConfirm() : onCancel()), 100);
+    // Radix Dialog exit animation uses duration-200 (200ms). Waiting the
+    // full duration before unmounting ensures the fade-out completes
+    // smoothly instead of snapping out of view.
+    setTimeout(() => (result ? onConfirm() : onCancel()), 200);
   };
 
   return (

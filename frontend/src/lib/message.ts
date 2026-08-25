@@ -1,15 +1,15 @@
 import { toast } from "@/components/ui/sonner";
 
-/** Toast-based message helper */
+/** Drop-in replacement for antd's message API */
 export const message = {
   success(content: string) {
     toast.success(content);
   },
   error(content: string) {
-    toast.error(content);
+    toast.error(content, { duration: 8000 });
   },
   warning(content: string) {
-    toast.warning(content);
+    toast.warning(content, { duration: 6000 });
   },
   info(content: string) {
     toast.info(content);

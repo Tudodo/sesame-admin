@@ -1,7 +1,14 @@
+import { safeLocalStorage } from "@/lib/utils";
 import enUS from "@/locales/en-US";
 import zhCN from "@/locales/zh-CN";
 import type React from "react";
-import { createContext, useCallback, useContext, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
 type Locale = "zh-CN" | "en-US";
 
@@ -26,12 +33,12 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [locale, setLocale] = useState<Locale>(() => {
-    return (localStorage.getItem("locale") as Locale) || "zh-CN";
+    return (safeLocalStorage.getItem("locale") as Locale) || "zh-CN";
   });
 
   const changeLocale = useCallback((l: Locale) => {
     setLocale(l);
-    localStorage.setItem("locale", l);
+    safeLocalStorage.setItem("locale", l);
   }, []);
 
   const t = useCallback(
@@ -42,11 +49,11 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({
     [locale],
   );
 
-  return (
-    <I18nContext.Provider value={{ locale, setLocale: changeLocale, t }}>
-      {children}
-    </I18nContext.Provider>
+  const value = useMemo(
+    () => ({ locale, setLocale: changeLocale, t }),
+    [locale, changeLocale, t],
   );
+  return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 };
 
 export function useI18n() {

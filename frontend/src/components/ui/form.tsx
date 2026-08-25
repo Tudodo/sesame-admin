@@ -45,6 +45,7 @@ const FormMessage = React.forwardRef<
   return (
     <p
       ref={ref}
+      role="alert"
       className={cn("text-destructive text-sm", className)}
       {...props}
     >

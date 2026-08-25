@@ -13,19 +13,20 @@ interface UserNamesContextValue {
   users: User[];
   userMap: Record<string, string>;
   loaded: boolean;
+  error: string | null;
+  refreshing: boolean;
   getName: (pid: string | null | undefined) => string;
   refresh: () => Promise<void>;
-  /** Inject externally-fetched user data to avoid redundant API calls. */
-  injectUsers: (users: User[]) => void;
 }
 
 const UserNamesContext = createContext<UserNamesContextValue>({
   users: [],
   userMap: {},
   loaded: false,
+  error: null,
+  refreshing: false,
   getName: (pid) => (pid ? `${pid.substring(0, 10)}...` : "-"),
   refresh: async () => {},
-  injectUsers: () => {},
 });
 
 export const UserNamesProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -34,37 +35,32 @@ export const UserNamesProvider: React.FC<{ children: React.ReactNode }> = ({
   const [users, setUsers] = useState<User[]>([]);
   const [userMap, setUserMap] = useState<Record<string, string>>({});
   const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   const fetchUsers = useCallback(async () => {
+    setRefreshing(true);
     try {
       const fetched = await listUsers();
       const map: Record<string, string> = {};
       for (const u of fetched) {
-        if (u.pid) map[u.pid] = u.name || u.email;
+        if (u.pid) map[u.pid] = u.name || u.email || "";
       }
       setUsers(fetched);
       setUserMap(map);
+      setError(null);
     } catch {
-      // Fallback to truncated PID display; log for debugging
-      console.warn("Failed to load user list for name resolution");
+      // 失败保留旧数据，避免每次渲染重复请求。
+      setError("用户姓名解析失败，部分姓名将显示用户编号");
     } finally {
       setLoaded(true);
+      setRefreshing(false);
     }
   }, []);
 
   useEffect(() => {
-    fetchUsers();
+    void fetchUsers();
   }, [fetchUsers]);
-
-  const injectUsers = useCallback((injected: User[]) => {
-    const map: Record<string, string> = {};
-    for (const u of injected) {
-      if (u.pid) map[u.pid] = u.name || u.email;
-    }
-    setUsers(injected);
-    setUserMap(map);
-    setLoaded(true);
-  }, []);
 
   const getName = useCallback(
     (pid: string | null | undefined): string => {
@@ -79,11 +75,12 @@ export const UserNamesProvider: React.FC<{ children: React.ReactNode }> = ({
       users,
       userMap,
       loaded,
+      error,
+      refreshing,
       getName,
       refresh: fetchUsers,
-      injectUsers,
     }),
-    [users, userMap, loaded, getName, fetchUsers, injectUsers],
+    [users, userMap, loaded, error, refreshing, getName, fetchUsers],
   );
 
   return (
@@ -95,6 +92,5 @@ export const UserNamesProvider: React.FC<{ children: React.ReactNode }> = ({
 
 /** Hook that provides name lookups by PID from the shared UserNamesContext. */
 export function useUserNames() {
-  const ctx = useContext(UserNamesContext);
-  return ctx;
+  return useContext(UserNamesContext);
 }

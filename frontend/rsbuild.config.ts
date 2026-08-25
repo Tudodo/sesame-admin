@@ -11,8 +11,12 @@ export default defineConfig({
     },
   },
   html: {
-    favicon: "src/assets/favicon.ico",
+    favicon: "src/assets/favicon.svg",
     title: "Sesame Admin",
+    meta: {
+      robots: "noindex, nofollow",
+    },
+    template: "src/template.html",
   },
   server: {
     host: "0.0.0.0",

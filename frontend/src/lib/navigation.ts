@@ -14,7 +14,7 @@ export function setNavigator(fn: Navigator | null) {
   navigator = fn;
 }
 
-function isSafeAppPath(path: string): boolean {
+export function isSafeAppPath(path: string): boolean {
   if (!path.startsWith("/")) return false;
   try {
     const parsed = new URL(path, window.location.origin);
@@ -31,17 +31,22 @@ function isSafeAppPath(path: string): boolean {
  * (e.g. navigated directly before the app shell mounted), preserving the old
  * behavior instead of silently dropping the request.
  *
- * Only same-origin absolute in-app paths are accepted. This blocks protocol
- * URLs, protocol-relative URLs (`//host`), and backslash-normalized external
- * URLs that could be injected via a server-supplied notification link.
+ * Returns false when the path is unsafe or not an in-app absolute path, so
+ * callers such as notification links can show feedback instead of appearing
+ * to do nothing.
+ *
+ * Only absolute in-app paths (starting with "/") are accepted. This blocks
+ * `javascript:` / `data:` protocol URLs that could be injected via a
+ * server-supplied notification link, preventing XSS.
  */
-export function navigate(path: string) {
-  if (!isSafeAppPath(path)) return;
+export function navigate(path: string): boolean {
+  if (!isSafeAppPath(path)) return false;
   if (navigator) {
     navigator(path);
-    return;
+    return true;
   }
   window.location.href = path;
+  return true;
 }
 
 /**

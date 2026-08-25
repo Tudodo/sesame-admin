@@ -11,32 +11,20 @@ import "@fontsource/space-grotesk/600.css";
 import "@fontsource/space-grotesk/700.css";
 import { Toaster } from "@/components/ui/sonner";
 import { App } from "./App";
-import {
-  DARK_MODE_STORAGE_KEY,
-  THEME_STORAGE_KEY,
-  applyThemePreset,
-  getThemePreset,
-} from "./lib/theme";
-import { loadThemeAssets } from "./theme";
+import { applyDarkMode, getDarkMode } from "./lib/theme";
 import { AppThemeProvider } from "./theme/AppThemeProvider";
 
 dayjs.locale("zh-cn");
+document.documentElement.lang = "zh-CN";
 
 const root = document.getElementById("root");
 if (!root) throw new Error("No root element found");
 
-async function bootstrap() {
-  const darkMode = localStorage.getItem(DARK_MODE_STORAGE_KEY) === "true";
-  let themePreset = getThemePreset();
-  try {
-    await loadThemeAssets(themePreset);
-  } catch {
-    themePreset = "default";
-    localStorage.setItem(THEME_STORAGE_KEY, "default");
-  }
-  applyThemePreset(themePreset, darkMode);
+function bootstrap() {
+  const darkMode = getDarkMode();
+  applyDarkMode(darkMode);
 
-  ReactDOM.createRoot(root).render(
+  ReactDOM.createRoot(root as HTMLElement).render(
     <React.StrictMode>
       <AppThemeProvider>
         <App />
@@ -46,4 +34,4 @@ async function bootstrap() {
   );
 }
 
-void bootstrap();
+bootstrap();

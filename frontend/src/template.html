@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Sesame Admin</title>
+    <meta name="description" content="Sesame 企业管理工作流管理平台" />
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <script>
+      // Apply saved dark-mode preference before React hydrates to prevent FOUC.
+      (function () {
+        try {
+          var root = document.documentElement;
+          var darkMode = localStorage.getItem('darkMode');
+          if (darkMode === null) {
+            darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'true' : 'false';
+          }
+          if (darkMode === 'true') {
+            root.classList.add('dark');
+          }
+        } catch (e) {
+          // localStorage may be unavailable (private mode); fall back to defaults.
+        }
+      })();
+    </script>
+    <style>
+      #initial-loader {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        gap: 8px;
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 14px;
+        color: #94a3b8;
+      }
+      #initial-loader .spinner {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #cbd5e1;
+        border-top-color: #3b82f6;
+        border-radius: 50%;
+        animation: initial-spin 0.6s linear infinite;
+      }
+      @keyframes initial-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      /* Dark-mode styles for the initial loader. The .dark class is set by
+         the inline script above, which checks both localStorage and the
+         system preference, so this always matches the user's actual
+         dark-mode state. */
+      .dark #initial-loader {
+        color: #64748b;
+      }
+      .dark #initial-loader .spinner {
+        border-color: #334155;
+        border-top-color: #60a5fa;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #initial-loader .spinner {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div id="initial-loader">
+        <div class="spinner"></div>
+        <span>系统加载中…</span>
+      </div>
+    </div>
+  </body>
+</html>

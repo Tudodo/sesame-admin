@@ -8,17 +8,19 @@
  *    permission code ends with `:create` or matches the short name
  *    in `currentActions`
  */
+import { safeLocalStorage } from "@/lib/utils";
+
 export function can(perm: string): boolean {
   try {
     // Check global permissions array (from login)
     const permissions: string[] = JSON.parse(
-      localStorage.getItem("permissions") || "[]",
+      safeLocalStorage.getItem("permissions") || "[]",
     );
     if (permissions.includes(perm)) return true;
 
     // Check per-route current actions (backward compat)
     const currentActions: string[] = JSON.parse(
-      localStorage.getItem("currentActions") || "[]",
+      safeLocalStorage.getItem("currentActions") || "[]",
     );
     if (currentActions.includes(perm)) return true;
 

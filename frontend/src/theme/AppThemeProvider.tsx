@@ -1,11 +1,5 @@
-import {
-  DARK_MODE_STORAGE_KEY,
-  THEME_STORAGE_KEY,
-  type ThemePreset,
-  applyThemePreset,
-  getThemePreset,
-} from "@/lib/theme";
-import { loadThemeAssets } from "@/theme";
+import { DARK_MODE_STORAGE_KEY, applyDarkMode, getDarkMode } from "@/lib/theme";
+import { safeLocalStorage } from "@/lib/utils";
 import type React from "react";
 import {
   createContext,
@@ -17,9 +11,7 @@ import {
 } from "react";
 
 interface ThemeContextValue {
-  themePreset: ThemePreset;
   darkMode: boolean;
-  setThemePreset: (preset: ThemePreset) => void;
   setDarkMode: (darkMode: boolean) => void;
 }
 
@@ -30,70 +22,30 @@ export function AppThemeProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [requestedPreset, setRequestedPresetState] = useState<ThemePreset>(() =>
-    getThemePreset(),
-  );
-  const [themePreset, setThemePresetState] = useState<ThemePreset>(() =>
-    getThemePreset(),
-  );
-  const [darkMode, setDarkModeState] = useState(
-    () => localStorage.getItem(DARK_MODE_STORAGE_KEY) === "true",
-  );
+  const [darkMode, setDarkModeState] = useState(() => getDarkMode());
 
   useEffect(() => {
-    let cancelled = false;
-    void loadThemeAssets(requestedPreset)
-      .then(() => {
-        if (cancelled) return;
-        applyThemePreset(requestedPreset, darkMode);
-        setThemePresetState(requestedPreset);
-      })
-      .catch(() => {
-        if (cancelled) return;
-        applyThemePreset("default", darkMode);
-        setThemePresetState("default");
-        setRequestedPresetState("default");
-        localStorage.setItem(THEME_STORAGE_KEY, "default");
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [requestedPreset, darkMode]);
+    applyDarkMode(darkMode);
+  }, [darkMode]);
 
   useEffect(() => {
     const syncFromStorage = (event: StorageEvent) => {
-      if (
-        event.key === THEME_STORAGE_KEY ||
-        event.key === DARK_MODE_STORAGE_KEY
-      ) {
-        const nextPreset = getThemePreset();
-        const nextDark = localStorage.getItem(DARK_MODE_STORAGE_KEY) === "true";
-        applyThemePreset(nextPreset, nextDark);
-        setRequestedPresetState(nextPreset);
-        setDarkModeState(nextDark);
+      if (event.key === DARK_MODE_STORAGE_KEY) {
+        setDarkModeState(getDarkMode());
       }
     };
     window.addEventListener("storage", syncFromStorage);
     return () => window.removeEventListener("storage", syncFromStorage);
   }, []);
 
-  const setThemePreset = useCallback((preset: ThemePreset) => {
-    localStorage.setItem(THEME_STORAGE_KEY, preset);
-    setRequestedPresetState(preset);
+  const setDarkMode = useCallback((next: boolean) => {
+    setDarkModeState(next);
+    safeLocalStorage.setItem(DARK_MODE_STORAGE_KEY, String(next));
   }, []);
 
-  const setDarkMode = useCallback(
-    (next: boolean) => {
-      applyThemePreset(themePreset, next);
-      setDarkModeState(next);
-      localStorage.setItem(DARK_MODE_STORAGE_KEY, String(next));
-    },
-    [themePreset],
-  );
-
   const value = useMemo(
-    () => ({ themePreset, darkMode, setThemePreset, setDarkMode }),
-    [themePreset, darkMode, setThemePreset, setDarkMode],
+    () => ({ darkMode, setDarkMode }),
+    [darkMode, setDarkMode],
   );
 
   return (
